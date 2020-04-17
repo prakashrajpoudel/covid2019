@@ -1,0 +1,46 @@
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+import MaterialTable from 'material-table';
+
+function App() {
+return (
+            <MaterialTable
+                title="Remote Data Preview"
+                columns={[
+                    { title: 'Title', field: 'title' },
+                    { title: 'Category', field: 'category' },
+                    { title: 'Biorxiv URL', field: 'biorxiv_url' },
+                    { title: 'First posted date', field: 'first_posted' },
+                ]}
+                data={query =>
+                    new Promise((resolve, reject) => {
+                        // let url = 'https://reqres.in/api/users?'
+                        let url = 'https://api.rxivist.org/v1/papers';
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+                        fetch(url, requestOptions)
+                            .then(response => response.json())
+                            .then(result => {
+                                resolve({
+                                    data: result.results,
+                                    page: result.query.current_page,
+                                    totalCount: result.query.total_results,
+                                })
+                            })
+                    })
+                }
+                options={{
+                    search: true
+                }}
+            />
+        )
+}
+
+export default App;
