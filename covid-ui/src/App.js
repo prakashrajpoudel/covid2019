@@ -18,7 +18,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-        fetch('http://localhost:8081/report', requestOptions)
+        fetch('https://lbmzxf3mqg.execute-api.us-east-1.amazonaws.com/dev/report', requestOptions)
         .then(res => res.json())
         .then((data) => {
           this.setState({ results: data.results })
